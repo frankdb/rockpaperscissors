@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+</head>
+<body>
+
+  <script>
+    
+    function computerPlay() {
+      let number = (Math.floor(Math.random() * 3));
+      if (number === 0) {
+        return "rock"
+      } else if (number === 1) {
+        return "paper"
+      } else if (number === 2) {
+        return "scissors"
+      }
+    }
+
+    function playRound(playerSelection, computerSelection) {
+      playerSelection.toLowerCase();
+      if (playerSelection === "rock") {
+        if (computerSelection === "paper") {
+          return "You Lose! Paper beats Rock" 
+        } else if (computerSelection === "rock") {
+          return "Nothing. You both picked rock"
+        } else if (computerSelection === "scissors") {
+          return "You Win! Rock beats scissors"
+        }
+      } else if (playerSelection === "paper") {
+        if (computerSelection === "paper") {
+          return "Nothing. You both picked paper" 
+        } else if (computerSelection === "rock") {
+          return "You Win! Paper beats rock"
+        } else if (computerSelection === "scissors") {
+          return "You Lose! Scissors beats paper"
+        }
+      } else if (playerSelection === "scissors") {
+        if (computerSelection === "paper") {
+          return "You Win! Scissors beats paper" 
+        } else if (computerSelection === "rock") {
+          return "You Lose! Rock beats scissors"
+        } else if (computerSelection === "scissors") {
+          return "Nothing. You both picked scissors"
+        }
+      }
+    }
+
+    let myScore = 0
+    let computerScore = 0
+
+    function game() {
+      for (let i = 0; i < 5; i++) {
+        let pick = prompt("Rock, paper or scissors?");
+        pick = pick.toLowerCase();
+        let computerSelection = computerPlay();
+        let roundResult = playRound(pick, computerSelection);
+        console.log(roundResult);
+
+        if (roundResult.includes("Win")) {
+          myScore++;
+        } else if (roundResult.includes("Lose")) {
+          computerScore++;
+        }
+        console.log("My Score: " + myScore);
+        console.log("Computer Score: " + computerScore);
+      }
+        if (myScore > computerScore) {
+          console.log("You are the Champion my Friend!");
+        } else if (myScore < computerScore) {
+          console.log("LOSER");
+        } else {
+          console.log("Tie");
+        }
+    }
+
+  </script>
+
+</body>
+</html>
