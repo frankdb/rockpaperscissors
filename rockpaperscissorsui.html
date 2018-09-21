@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rock Paper Scissors</title>
+
+  <style type="text/css">
+
+    @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+    .icon {
+      width: 100px;
+      height: 100px;
+      padding: 10px;
+      border: 5px solid black;
+      border-radius: 30px;
+    }
+
+    .icon:active {
+      transform: scale(1.2);
+    }
+
+    .icon-wrapper {
+      margin: 20px;
+    }
+
+    #bigwrapper {
+      display: flex;
+    }
+
+    #myscoretally, #computerscoretally, #results, #winOrLose {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    #myscoretally, #computerscoretally {
+      padding: 30px;
+    }
+
+    #bigscoreboard {
+      display: flex;
+    }
+
+    #results, #winOrLose {
+      padding-left: 50px;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <div id="bigwrapper">
+
+    <div class="icon-wrapper">
+      <img src="rock.png" class="icon" id="rockchoice">
+    </div>
+
+    <div class="icon-wrapper">
+      <img src="paper.png" class="icon" id="paperchoice">
+    </div>
+
+    <div class="icon-wrapper">
+      <img src="cut-512.png" class="icon" id="scissorschoice">
+    </div>
+
+  </div>
+
+  <div id="winOrLose">
+  </div>
+
+  <div id="bigscoreboard">
+    <div id="myscoretally">
+    </div>
+    <div id="computerscoretally">
+    </div>
+  </div>
+
+  <div id="results">
+  </div>
+
+  <script>
+    
+    function computerPlay() {
+      let number = (Math.floor(Math.random() * 3));
+      if (number === 0) {
+        return "rock"
+      } else if (number === 1) {
+        return "paper"
+      } else if (number === 2) {
+        return "scissors"
+      }
+    }
+
+    function playRound(playerSelection, computerSelection) {
+      if (playerSelection === "rock") {
+        if (computerSelection === "paper") {
+          return "You Lose! Paper beats Rock" 
+        } else if (computerSelection === "rock") {
+          return "Nothing. You both picked rock"
+        } else if (computerSelection === "scissors") {
+          return "You Win! Rock beats scissors"
+        }
+      } else if (playerSelection === "paper") {
+        if (computerSelection === "paper") {
+          return "Nothing. You both picked paper" 
+        } else if (computerSelection === "rock") {
+          return "You Win! Paper beats rock"
+        } else if (computerSelection === "scissors") {
+          return "You Lose! Scissors beats paper"
+        }
+      } else if (playerSelection === "scissors") {
+        if (computerSelection === "paper") {
+          return "You Win! Scissors beats paper" 
+        } else if (computerSelection === "rock") {
+          return "You Lose! Rock beats scissors"
+        } else if (computerSelection === "scissors") {
+          return "Nothing. You both picked scissors"
+        }
+      }
+    }
+
+    let rockchoice = document.getElementById("rockchoice");
+    let paperchoice = document.getElementById("paperchoice");
+    let scissorschoice = document.getElementById("scissorschoice");
+
+    let printRoundResult = document.createElement('h2');
+
+    let myScore = 0
+    let computerScore = 0
+
+    let myScoreBoard = document.createElement('h2');
+    myScoreBoard.textContent = "My Score: " + myScore
+    myscoretally.appendChild(myScoreBoard)
+
+    let computerScoreBoard = document.createElement('h2');
+    computerScoreBoard.textContent = "Computer Score: " + computerScore
+    computerscoretally.appendChild(computerScoreBoard)
+
+    let winnerOrLoser = document.createElement('h2')
+
+    rockchoice.addEventListener('click', function() {
+      winnerOrLoser.textContent = "";
+      winOrLose.appendChild(winnerOrLoser);
+      let roundResult = playRound('rock', computerPlay());
+      printRoundResult.textContent = roundResult;
+      results.appendChild(printRoundResult);
+      scoreB(roundResult);
+      wOrL();
+    });
+
+    paperchoice.addEventListener('click', function() {
+      winnerOrLoser.textContent = "";
+      winOrLose.appendChild(winnerOrLoser);
+      let roundResult = playRound('paper', computerPlay());
+      printRoundResult.textContent = roundResult;
+      results.appendChild(printRoundResult);
+      scoreB(roundResult);
+      wOrL();
+    });
+
+    scissorschoice.addEventListener('click', function() {
+      winnerOrLoser.textContent = "";
+      winOrLose.appendChild(winnerOrLoser);
+      let roundResult = playRound('scissors', computerPlay());
+      printRoundResult.textContent = roundResult;
+      results.appendChild(printRoundResult);
+      scoreB(roundResult);
+      wOrL();
+    });
+
+    function scoreB(roundResult) {
+      if (roundResult.includes("Win")) {
+        myScore++;
+        myScoreBoard.textContent = "My Score: " + myScore;
+        myscoretally.appendChild(myScoreBoard);
+      } else if (roundResult.includes("Lose")) {
+        computerScore++;
+        computerScoreBoard.textContent = "Computer Score: " + computerScore;
+        computerscoretally.appendChild(computerScoreBoard);
+      }
+    };
+
+    function wOrL() {
+    if (myScore === 5 || computerScore === 5) {
+      if (myScore > computerScore) {
+        winnerOrLoser.textContent = "You are the Champion my Friend!";
+        winnerOrLoser.style.cssText = 'color: blue;';
+        winOrLose.appendChild(winnerOrLoser);
+      } else {
+        winnerOrLoser.textContent = "LOSER"
+        winnerOrLoser.style.cssText = 'color: red;';
+        winOrLose.appendChild(winnerOrLoser);
+      };
+      reset();
+    }
+    };
+
+    function reset() {
+      myScore = 0;
+      myScoreBoard.textContent = "My Score: " + myScore;
+      myscoretally.appendChild(myScoreBoard);
+      computerScore = 0;
+      computerScoreBoard.textContent = "Computer Score: " + computerScore;
+      computerscoretally.appendChild(computerScoreBoard);
+      printRoundResult.textContent = '';
+      results.appendChild(printRoundResult);
+    };
+
+  </script>
+
+</body>
+</html>
